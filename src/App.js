@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Public from "./components/Public";
+import ApartmentsList from "./features/apartments/ApartmentsList";
+import EditApartment from "./features/apartments/EditApartment";
+import NewApartmentForm from "./features/apartments/NewApartmentForm";
+import Prefetch from "./features/auth/Prefetch";
+import useTitle from "./hooks/useTitle";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    useTitle("Apartment market");
+    return (
+        <Routes>
+            <Route path="/" element={<Layout></Layout>}>
+                <Route element={<Prefetch></Prefetch>}>
+                    <Route index element={<Public></Public>}></Route>
+                    <Route
+                        path=":id"
+                        element={<EditApartment></EditApartment>}
+                    ></Route>
+                    <Route
+                        path="add"
+                        element={<NewApartmentForm></NewApartmentForm>}
+                    ></Route>
+                </Route>
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
